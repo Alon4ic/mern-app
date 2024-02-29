@@ -48,19 +48,30 @@ export const createPost = async (req, res) => {
     }
 };
 
-
 // Get all posts
 export const getAll = async (req, res) => {
     try {
-        const posts = await Post.find().sort('-createAt')
-        const popularPosts = await Post.find().limit(5).sort('-views')
+        const posts = await Post.find().sort('-createAt');
+        const popularPosts = await Post.find().limit(5).sort('-views');
 
-        if(!posts) {
-            return res.json({message: 'No posts yet'})
+        if (!posts) {
+            return res.json({ message: 'No posts yet' });
         }
 
-        res.json({ posts, popularPosts})
+        res.json({ posts, popularPosts });
     } catch (error) {
-        res.json({message: 'Something went wrong.'})
+        res.json({ message: 'Something went wrong.' });
     }
-}
+};
+
+// Get post by id
+export const getById = async (req, res) => {
+    try {
+        const post = await Post.findByIdAndUpdate(req.params.id, {
+            $inc: { views: 1 },
+        });
+        res.json(post);
+    } catch (error) {
+        res.json({ message: 'Что-то пошло не так.' });
+    }
+};
