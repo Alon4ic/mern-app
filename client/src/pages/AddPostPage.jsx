@@ -4,30 +4,30 @@ import { createPost } from '../redux/features/post/postSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const AddPostPage = () => {
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [image, setImage] = useState('');
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const submitHandler = () => {
         try {
-            const data = new FormData()
-            data.append('title', title)
-            data.append('text', text)
-            data.append('image', image)
-            dispatch(createPost(data))
-            navigate('/')
+            const data = new FormData();
+            data.append('title', title);
+            data.append('text', text);
+            data.append('image', image);
+            dispatch(createPost(data));
+            navigate('/');
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     const clearFormHandler = () => {
-        setText('')
-        setTitle('')
-    }
+        setText('');
+        setTitle('');
+    };
 
     return (
         <form
@@ -43,9 +43,9 @@ export const AddPostPage = () => {
                 />
             </label>
             <div className="flex object-cover py-2">
-                { image && (
+                {image && (
                     <img src={URL.createObjectURL(image)} alt={image.name} />
-                ) }
+                )}
             </div>
             <label className="text-xs text-white opacity-70">
                 Post title:
@@ -69,10 +69,13 @@ export const AddPostPage = () => {
                 ></textarea>
             </label>
             <div className="flex gap-8 items-center justify-center mt-4">
-                <button onClick={submitHandler} className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4">
+                <button
+                    onClick={submitHandler}
+                    className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4"
+                >
                     Add post
                 </button>
-                <button 
+                <button
                     className="flex justify-center items-center bg-red-500 text-xs text-white rounded-sm py-2 px-4"
                     onClick={clearFormHandler}
                 >
